@@ -33,7 +33,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\" : \"5630252488\",\n    \"first_name\" : \"pipusana\",\n    \"last_name\" : \"petgumpoom\",\n    \"email\" : \"pipusana.p@gmail.com\",\n    \"gender\" : \"male\",\n    \"age\" : 26,\n    \"height\": 180,\n    \"weight\": 74.2,\n    \"hobby\": [\"jogging\", \"gaming\"],\n    \"country\" : \"thailand\",\n    \"city\" : \"bangkok\"\n}\n"
+					"raw": "{\n    \"id\" : \"5630252488\",\n    \"first_name\" : \"pipusana\",\n    \"last_name\" : \"petgumpoom\",\n    \"email\" : \"pipusana.p@gmail.com\",\n    \"gender\" : \"male\",\n    \"age\" : 26,\n    \"picture_url\": \"https://scontent.fbkk12-1.fna.fbcdn.net/v/t1.0-9/1005556_545569122156064_28511899_n.jpg?_nc_cat=101&ccb=2&_nc_sid=174925&_nc_ohc=Wl8T81WCp_oAX-b4-1V&_nc_ht=scontent.fbkk12-1.fna&oh=cb2967395d3e8555a7a33c0bf4cf58b4&oe=60308979\",\n    \"height\": 180,\n    \"weight\": 74.2,\n    \"hobby\": [\"jogging\", \"gaming\"],\n    \"country\" : \"thailand\",\n    \"city\" : \"bangkok\"\n}\n"
 				},
 				"url": {
 					"raw": "{{apiUrl}}/students",

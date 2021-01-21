@@ -1,7 +1,8 @@
 import uvicorn
-from fastapi import FastAPI, Path, Query
+from fastapi import FastAPI, Path, Query, HTTPException
 from starlette.responses import JSONResponse
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
 
 from database.mongodb import MongoDB
 from config.development import config
@@ -21,6 +22,14 @@ mongo_db._connect()
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def index():
@@ -32,7 +41,12 @@ def get_students(
     sort_by: Optional[str] = None,
     order: Optional[str] = Query(None, min_length=3, max_length=4),
 ):
-    result = mongo_db.find(sort_by, order)
+
+    try:
+        result = mongo_db.find(sort_by, order)
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong !!")
+
     return JSONResponse(
         content={"status": "OK", "data": result},
         status_code=200,
@@ -41,7 +55,14 @@ def get_students(
 
 @app.get("/students/{student_id}")
 def get_students_by_id(student_id: str = Path(None, min_length=10, max_length=10)):
-    result = mongo_db.find_one(student_id)
+    try:
+        result = mongo_db.find_one(student_id)
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong !!")
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="Student Id not found !!")
+
     return JSONResponse(
         content={"status": "OK", "data": result},
         status_code=200,
@@ -50,8 +71,11 @@ def get_students_by_id(student_id: str = Path(None, min_length=10, max_length=10
 
 @app.post("/students")
 def create_books(student: createStudentModel):
-    print("student", student)
-    student_id = mongo_db.create(student)
+    try:
+        student_id = mongo_db.create(student)
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong !!")
+
     return JSONResponse(
         content={
             "status": "ok",
@@ -68,7 +92,17 @@ def update_books(
     student: updateStudentModel,
     student_id: str = Path(None, min_length=10, max_length=10),
 ):
-    updated_student_id, modified_count = mongo_db.update(student_id, student)
+    try:
+        updated_student_id, modified_count = mongo_db.update(student_id, student)
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong !!")
+
+    if modified_count == 0:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Student Id: {updated_student_id} is not update want fields",
+        )
+
     return JSONResponse(
         content={
             "status": "ok",
@@ -83,7 +117,16 @@ def update_books(
 
 @app.delete("/students/{student_id}")
 def delete_book_by_id(student_id: str = Path(None, min_length=10, max_length=10)):
-    deleted_student_id, deleted_count = mongo_db.delete(student_id)
+    try:
+        deleted_student_id, deleted_count = mongo_db.delete(student_id)
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong !!")
+
+    if deleted_count == 0:
+        raise HTTPException(
+            status_code=404, detail=f"Student Id: {deleted_student_id} is not Delete"
+        )
+
     return JSONResponse(
         content={
             "status": "ok",
@@ -97,4 +140,4 @@ def delete_book_by_id(student_id: str = Path(None, min_length=10, max_length=10)
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=3000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=3001, reload=True)
