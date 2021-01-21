@@ -1,0 +1,27 @@
+{
+    "_id" : "5630252488",
+    "first_name" : "pipusana",
+    "last_name" : "petgumpoom",
+    "email" : "pipusana.p@gmail.com",
+    "gender" : "male",
+    "age" : 26,
+    "height": 180,
+    "weight": 74.2,
+    "hobby": ["jogging", "gaming"],
+    "country" : "thailand",
+    "city" : "bangkok"
+}
+
+{
+    "id": "5630252489",
+    "first_name" : "jimmie",
+    "last_name" : "momay",
+    "email" : "jimmie.m@gmail.com",
+    "gender" : "male",
+    "age" : 30,
+    "height": 180,
+    "weight": 68.2,
+    "hobby": ["jogging", "gaming"],
+    "country" : "thailand",
+    "city" : "bangkok"
+}
