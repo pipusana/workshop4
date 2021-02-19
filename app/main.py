@@ -92,6 +92,7 @@ def update_books(
     student: updateStudentModel,
     student_id: str = Path(None, min_length=10, max_length=10),
 ):
+    print("student", student)
     try:
         updated_student_id, modified_count = mongo_db.update(student_id, student)
     except:
