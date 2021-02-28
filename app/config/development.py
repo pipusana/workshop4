@@ -3,7 +3,7 @@ config = {
         "host": "localhost",
         "port": 27017,
         "user": "root",
-        "password": "rootpassword",
+        "password": "root",
         "auth_db": "admin",
         "db": "profile",
         "collection": "student",
